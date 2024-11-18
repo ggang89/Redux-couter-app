@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./reducers";
 
 type Props = {
@@ -10,19 +10,21 @@ type Props = {
 };
 
 function App({ value, onIncrement, onDecrement }: Props) {
+  const dispatch = useDispatch();
 
   //rootReducer에서 지정한 type 사용
-  const counter = useSelector((state:RootState) => state.counter);
+  const counter = useSelector((state: RootState) => state.counter);
   const todos: string[] = useSelector((state: RootState) => state.todos);
 
   const [todoValue, setTodoValue] = useState("");
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoValue(e.target.value);
-  }
-  const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
+  };
+  const addTodo = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    dispatch({ type: "ADD_TODO", text: todoValue });
     setTodoValue("");
-  }
+  };
   return (
     <div>
       <h3>Clicked : {counter} times</h3>
