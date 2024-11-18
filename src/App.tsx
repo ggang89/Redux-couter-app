@@ -1,13 +1,18 @@
-import React from 'react';
+import React from "react";
+import "./App.css";
 
-import './App.css';
+type Props = {
+  value: number;
+  onIncrement: () => void;
+  onDecrement: () => void;
+};
 
-function App() {
+function App({ value, onIncrement, onDecrement }: Props) {
   return (
-    <div >
-      Clicked : times
-      <button>+</button>
-      <button>-</button>
+    <div>
+      <h3>Clicked : {value} times</h3>
+      <button onClick={onIncrement}>+</button>
+      <button onClick={onDecrement}>-</button>
     </div>
   );
 }
