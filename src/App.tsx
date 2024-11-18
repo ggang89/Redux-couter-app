@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
+import { useSelector } from "react-redux";
+import { RootState } from "./reducers";
 
 type Props = {
   value: any;
@@ -8,6 +10,11 @@ type Props = {
 };
 
 function App({ value, onIncrement, onDecrement }: Props) {
+
+  //rootReducer에서 지정한 type 사용
+  const counter = useSelector((state:RootState) => state.counter);
+  const todos: string[] = useSelector((state: RootState) => state.todos);
+
   const [todoValue, setTodoValue] = useState("");
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoValue(e.target.value);

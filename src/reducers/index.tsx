@@ -8,3 +8,6 @@ const rootReducer = combineReducers({
 })
 
 export default rootReducer;
+
+//RootState 타입 생성해서 useSelector의 state type으로 지정
+export type RootState = ReturnType<typeof rootReducer>;
