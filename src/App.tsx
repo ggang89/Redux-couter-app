@@ -25,13 +25,19 @@ function App({ value, onIncrement, onDecrement }: Props) {
   }
   return (
     <div>
-      {/* <h3>Clicked : {value} times</h3> */}
+      <h3>Clicked : {counter} times</h3>
       <button onClick={onIncrement}>+</button>
       <button onClick={onDecrement}>-</button>
 
+      <ul>
+        {todos.map((todo, index) => (
+          <li key={index}>{todo}</li>
+        ))}
+      </ul>
+
       <form onSubmit={addTodo}>
-        <input type="text" value={todoValue} onChange={handleChange}/>
-      <input type="submit"/>
+        <input type="text" value={todoValue} onChange={handleChange} />
+        <input type="submit" />
       </form>
     </div>
   );
