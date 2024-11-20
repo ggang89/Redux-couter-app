@@ -5,6 +5,8 @@ import App from "./App";
 import { applyMiddleware, createStore } from "redux";
 import rootReducer from "./reducers";
 import { Provider } from "react-redux";
+import { thunk } from "redux-thunk";
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,11 +16,12 @@ const root = ReactDOM.createRoot(
 const loggerMidleware = (store: any) => (next: any) => (action: any) => {
   console.log("store", store);
   console.log("action", action);
-  next(action)
+  next(action);
 }
-const middleware = applyMiddleware(loggerMidleware);
+const middleware = applyMiddleware(thunk, loggerMidleware);
 
 const store = createStore(rootReducer, middleware);
+//const store = createStore(rootReducer);
 
 const render = () =>
   root.render(

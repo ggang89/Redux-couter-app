@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./reducers";
+import { fetchPosts } from "./actions/posts";
 
 type Props = {
   value: any;
   onIncrement: () => void;
   onDecrement: () => void;
 };
-
+interface Post{
+  userId: number;
+  id: number;
+  title: string;
+}
 function App({ value, onIncrement, onDecrement }: Props) {
   const dispatch = useDispatch();
 
@@ -16,7 +21,18 @@ function App({ value, onIncrement, onDecrement }: Props) {
   const counter = useSelector((state: RootState) => state.counter);
   const todos: string[] = useSelector((state: RootState) => state.todos);
 
+  const posts:Post[]=useSelector((state:RootState)=>state.posts)
+
   const [todoValue, setTodoValue] = useState("");
+
+  useEffect(() => {
+    dispatch(fetchPosts())
+    //액션은 객체여야 하는데 함수를 넣어서 오류 발생
+    //=>함수를 dispatch해주는 Redux-Thunk 미들웨어 사용해야 함
+  },[dispatch])
+
+ 
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoValue(e.target.value);
   };
@@ -41,6 +57,11 @@ function App({ value, onIncrement, onDecrement }: Props) {
         <input type="text" value={todoValue} onChange={handleChange} />
         <input type="submit" />
       </form>
+
+      <ul>
+        {posts.map((post, index) =><li key={index}>{post.title}</li>
+        )}
+      </ul>
     </div>
   );
 }
